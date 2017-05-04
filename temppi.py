@@ -8,7 +8,7 @@
 #
 # Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/grovepi
 #
-'''
+"""
 ## License
 
 The MIT License (MIT)
@@ -33,7 +33,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-'''
+"""
 
 #################################################################################################################################################
 # NOTE:
@@ -44,6 +44,7 @@ import grove_i2c_temp_hum_mini
 import time
 import random
 import comms
+import logging
 
 # init temp sensor
 t = grove_i2c_temp_hum_mini.th02()
@@ -53,6 +54,9 @@ comms_system = comms.Comms()
 comms_system.log('comms started')
 comms_system.aio_create_feed("SC03temp")
 send_to_comms = False
+
+logging.basicConfig(filename='log_temppi.log', level=logging.DEBUG)
+logging.info("testint test")
 
 ## MAIN APP LOOP
 while True:
