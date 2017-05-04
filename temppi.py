@@ -34,6 +34,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
+
 #################################################################################################################################################
 # NOTE:
 # The software for this sensor is still in development and might make your GrovePi unuable as long as this sensor is connected with the GrovePi
@@ -42,9 +43,24 @@ from grove_rgb_lcd import *
 import grove_i2c_temp_hum_mini
 import time
 import random
+import comms
 
-t= grove_i2c_temp_hum_mini.th02()
+# init temp sensor
+t = grove_i2c_temp_hum_mini.th02()
+
+# init comms system
+comms_system = comms.Comms()
+comms_system.setDaemon(True)
+comms_system.start()
+comms_system.log('comms started')
+comms_system.aio_create_feed("SC03temp")
+
+
+## MAIN APP LOOP
 while True:
-        setRGB(random.randint(0,255),random.randint(0,255),random.randint(0,255))
-	setText('Temp: %.2fF' %((t.getTemperature()*1.8)+32)) 
+
+	setRGB(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+	temp = (t.getTemperature() * 1.8) + 32
+	setText('Temp: %.2fF' % temp)
+	comms_system.aio_send("SC03temp", temp)
 	time.sleep(10)
