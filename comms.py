@@ -11,31 +11,13 @@ from Adafruit_IO import Client, Feed
 class Comms:
 
     def __init__(self):
-
-        # LOGGING
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.INFO)
-        # create a file handler
-        log_handler = logging.FileHandler('log_temppi.log')
-        log_handler.setLevel(logging.INFO)
-        # create a logging format
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        log_handler.setFormatter(formatter)
-        # add the handlers to the logger
-        self.logger.addHandler(log_handler)
+        logging.basicConfig(format='%(levelname)s:%(message)s', filename='log_temppi.log', level=logging.DEBUG)
         self.log('comms init complete')
         pygame.mixer.init()
         self.aio = Client(private.AIO_KEY)
-        # bluetooth in try-block to allow clients to run without pybluez module
-        try:
-            # noinspection PyUnresolvedReferences
-            import bluetooth
-        except ImportError:
-            self.log("Failed to import bluetooth")
-            pass
 
     def log(self, msg):
-        self.logger.info(msg)
+        logging.info(msg)
 
     # PICKLE
     def save_obj(self, obj, name):
@@ -53,35 +35,6 @@ class Comms:
         except Exception as ee:
             self.log("Error loading object " + name + ee.__str__())
             return None
-
-    # BLUETOOTH
-    def check_bluetooth(self, target):
-        try:
-            result = bluetooth.lookup_name(target, timeout=5)
-            if result is not None:
-                return True
-            else:
-                return False
-
-        except Exception as ee:
-            self.log("Failed bluetooth lookup" + ee.__str__())
-            return False
-
-    def connect_phue(self):
-        try:
-            from phue import Bridge
-        except Exception as ee:
-            self.log("Error loading phue: " + ee.__str__())
-            return False
-
-        try:
-            b = Bridge(private.BRIDGE_IP)
-            b.connect()
-        except Exception as ee:
-            self.log("Error connecting phue: " + ee.__str__())
-            return False
-        self.log("phue connected")
-        return True
 
     # ADAFRUIT.IO
     def aio_send(self, feed, msg):

@@ -56,7 +56,7 @@ send_to_comms = False
 
 ## MAIN APP LOOP
 while True:
-
+	# read the temp
 	try:
 		temp = (t.getTemperature() * 1.8) + 32
 	except Exception as ee:
