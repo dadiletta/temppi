@@ -52,13 +52,29 @@ t = grove_i2c_temp_hum_mini.th02()
 comms_system = comms.Comms()
 comms_system.log('comms started')
 comms_system.aio_create_feed("SC03temp")
-
+send_to_comms = False
 
 ## MAIN APP LOOP
 while True:
 
+	try:
+		temp = (t.getTemperature() * 1.8) + 32
+	except Exception as ee:
+		setText(ee.__str__())
+
+	# random color for LCD screen
 	setRGB(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-	temp = (t.getTemperature() * 1.8) + 32
 	setText('Temp: %.2fF' % temp)
-	comms_system.aio_send("SC03temp", temp)
+
+	# stagger AIO to reduce cloud data store
+	if send_to_comms:
+		try:
+			comms_system.aio_send("SC03temp", temp)
+		except Exception as ee:
+			setText(ee.__str__())
+		send_to_comms = False
+	else:
+		send_to_comms = True
+
+	# TEN SECOND CYCLE
 	time.sleep(10)
