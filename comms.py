@@ -12,8 +12,8 @@ class Comms:
 
     def __init__(self):
 
-        LOG_LEVEL = logging.INFO
-        # LOG_LEVEL = logging.DEBUG
+        # LOG_LEVEL = logging.INFO
+        LOG_LEVEL = logging.DEBUG
         LOG_FILE = "/home/pi/temppi/log_temppi.log"
         LOG_FORMAT = "%(asctime)s %(levelname)s %(message)s"
         logging.basicConfig(filename=LOG_FILE, format=LOG_FORMAT, level=LOG_LEVEL)
