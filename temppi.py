@@ -56,7 +56,7 @@ comms_system.aio_create_feed("SC03temp")
 send_to_comms = False
 
 logging.basicConfig(filename='log_temppi.log', level=logging.DEBUG)
-logging.info("testint test")
+logging.debug("testint test")
 
 ## MAIN APP LOOP
 while True:
