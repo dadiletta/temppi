@@ -1,4 +1,3 @@
-import threading
 import logging
 import pygame
 import subprocess
@@ -9,10 +8,9 @@ import os
 from Adafruit_IO import Client, Feed
 
 
-class Comms(threading.Thread):
+class Comms:
 
     def __init__(self):
-        threading.Thread.__init__(self)
 
         # LOGGING
         self.logger = logging.getLogger(__name__)

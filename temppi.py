@@ -50,8 +50,6 @@ t = grove_i2c_temp_hum_mini.th02()
 
 # init comms system
 comms_system = comms.Comms()
-comms_system.setDaemon(True)
-comms_system.start()
 comms_system.log('comms started')
 comms_system.aio_create_feed("SC03temp")
 
