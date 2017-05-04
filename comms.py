@@ -11,7 +11,13 @@ from Adafruit_IO import Client, Feed
 class Comms:
 
     def __init__(self):
-        logging.basicConfig(format='%(levelname)s:%(message)s', filename='log_temppi.log', level=logging.DEBUG)
+
+        # LOG_LEVEL = logging.INFO
+        LOG_LEVEL = logging.DEBUG
+        LOG_FILE = "/home/pi/temppi/log_temppi.log"
+        LOG_FORMAT = "%(asctime)s %(levelname)s %(message)s"
+        logging.basicConfig(filename=LOG_FILE, format=LOG_FORMAT, level=LOG_LEVEL)
+
         self.log('comms init complete')
         pygame.mixer.init()
         self.aio = Client(private.AIO_KEY)

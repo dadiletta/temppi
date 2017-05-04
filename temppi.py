@@ -44,7 +44,6 @@ import grove_i2c_temp_hum_mini
 import time
 import random
 import comms
-import logging
 
 # init temp sensor
 t = grove_i2c_temp_hum_mini.th02()
@@ -55,8 +54,6 @@ comms_system.log('comms started')
 comms_system.aio_create_feed("SC03temp")
 send_to_comms = False
 
-logging.basicConfig(filename='log_temppi.log', level=logging.DEBUG)
-logging.debug("testint test")
 
 ## MAIN APP LOOP
 while True:
