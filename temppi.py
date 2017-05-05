@@ -45,12 +45,15 @@ import time
 import random
 import comms
 import logging
+import os
 
 # init temp sensor
 t = grove_i2c_temp_hum_mini.th02()
 
 # init comms system
 comms_system = comms.Comms()
+comms_system.setDaemon(True)
+comms_system.start()
 # comms_system.aio_create_feed("SC03temp")
 send_to_comms = False
 
@@ -81,3 +84,4 @@ try:
 		time.sleep(10)
 except Exception as ee:
 	logging.error("App loop crashed " + ee.__str__())
+	os.system('sudo reboot')

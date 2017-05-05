@@ -1,3 +1,4 @@
+import threading
 import logging
 import pygame
 import subprocess
@@ -8,12 +9,13 @@ import os
 from Adafruit_IO import Client, Feed
 
 
-class Comms:
+class Comms(threading.Thread):
 
     def __init__(self):
+        threading.Thread.__init__(self)
 
-        # LOG_LEVEL = logging.INFO
-        LOG_LEVEL = logging.DEBUG
+        LOG_LEVEL = logging.INFO
+        # LOG_LEVEL = logging.DEBUG
         LOG_FILE = "/home/pi/temppi/log_temppi.log"
         LOG_FORMAT = "%(asctime)s %(levelname)s %(message)s"
         logging.basicConfig(filename=LOG_FILE, format=LOG_FORMAT, level=LOG_LEVEL)
